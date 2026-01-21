@@ -30,7 +30,12 @@ function render() {
       sq.className = "square " + ((r + c) % 2 === 0 ? "light" : "dark");
 
       const piece = board[r][c];
-      if (piece !== ".") sq.textContent = pieces[piece];
+      if (piece !== ".") {
+        sq.textContent = pieces[piece];
+        sq.classList.add(
+        piece === piece.toUpperCase() ? "white-piece" : "black-piece"
+  );
+}
 
       sq.onclick = () => onSquareClick(r, c, sq);
       boardEl.appendChild(sq);
