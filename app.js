@@ -2,6 +2,7 @@ const boardEl = document.getElementById("board");
 const statusEl = document.getElementById("status");
 
 let selected = null;
+let turn = "white";
 
 const pieces = {
   r: "♜", n: "♞", b: "♝", q: "♛", k: "♚", p: "♟",
@@ -21,6 +22,8 @@ const initialBoard = [
 
 let board = structuredClone(initialBoard);
 
+/* ================== RENDER ================== */
+
 function render() {
   boardEl.innerHTML = "";
 
@@ -33,45 +36,84 @@ function render() {
       if (piece !== ".") {
         sq.textContent = pieces[piece];
         sq.classList.add(
-        piece === piece.toUpperCase() ? "white-piece" : "black-piece"
-  );
-}
+          piece === piece.toUpperCase() ? "white-piece" : "black-piece"
+        );
+      }
 
-      sq.onclick = () => onSquareClick(r, c, sq);
+      sq.onclick = () => onSquareClick(r, c);
       boardEl.appendChild(sq);
     }
   }
+
+  statusEl.innerText = `Vez das ${turn === "white" ? "brancas" : "pretas"}`;
 }
 
-function onSquareClick(r, c, el) {
+/* ================== CLIQUE ================== */
+
+function onSquareClick(r, c) {
+  const piece = board[r][c];
+
   if (selected) {
     const [sr, sc] = selected;
 
-    board[r] =
-      board[r].substring(0, c) +
-      board[sr][sc] +
-      board[r].substring(c + 1);
-
-    board[sr] =
-      board[sr].substring(0, sc) +
-      "." +
-      board[sr].substring(sc + 1);
+    if (isLegalMove(sr, sc, r, c)) {
+      movePiece(sr, sc, r, c);
+      turn = turn === "white" ? "black" : "white";
+    }
 
     selected = null;
-    statusEl.innerText = "Lance feito";
     render();
-  } else if (board[r][c] !== ".") {
+    return;
+  }
+
+  if (piece !== "." && isPlayersPiece(piece)) {
     selected = [r, c];
-    statusEl.innerText = "Escolha o destino";
-    el.classList.add("selected");
   }
 }
 
-function resetGame() {
-  board = structuredClone(initialBoard);
-  selected = null;
-  statusEl.innerText = "Partida reiniciada";
-  render();
+/* ================== MOVIMENTO ================== */
+
+function movePiece(sr, sc, r, c) {
+  board[r] =
+    board[r].substring(0, c) +
+    board[sr][sc] +
+    board[r].substring(c + 1);
+
+  board[sr] =
+    board[sr].substring(0, sc) +
+    "." +
+    board[sr].substring(sc + 1);
 }
+
+/* ================== REGRAS ================== */
+
+function isPlayersPiece(piece) {
+  return turn === "white"
+    ? piece === piece.toUpperCase()
+    : piece === piece.toLowerCase();
+}
+
+function isLegalMove(sr, sc, r, c) {
+  const piece = board[sr][sc];
+  const target = board[r][c];
+
+  if (target !== "." && isSameColor(piece, target)) return false;
+
+  const dr = r - sr;
+  const dc = c - sc;
+
+  switch (piece.toLowerCase()) {
+    case "p": return pawnMove(piece, sr, sc, r, c, dr, dc);
+    case "r": return rookMove(sr, sc, r, c);
+    case "n": return knightMove(dr, dc);
+    case "b": return bishopMove(sr, sc, r, c);
+    case "q": return queenMove(sr, sc, r, c);
+    case "k": return kingMove(dr, dc);
+  }
+  return false;
+
+}
+
+/* ================== START ================== */
 
 render();
