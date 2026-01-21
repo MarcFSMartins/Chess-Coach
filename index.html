@@ -1,46 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Play Coach</title>
-
-  <!-- Chessground CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/chessground@8.2.1/assets/chessground.base.css"
-  />
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/chessground@8.2.1/assets/chessground.brown.css"
-  />
-
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
     }
-    #board {
-      width: 320px;
-      height: 320px;
-      margin: 20px auto;
+    iframe {
+      width: 350px;
+      height: 420px;
+      border: none;
     }
   </style>
 </head>
-
 <body>
+
   <h1>Play Coach</h1>
-  <p id="status">Faça um lance</p>
+  <p>Jogue a partida abaixo</p>
 
-  <!-- TABULEIRO -->
-  <div id="board"></div>
+  <iframe
+    src="https://lichess.org/embed/analysis/standard"
+    allowfullscreen
+  ></iframe>
 
-  <!-- Chess.js (regras do jogo) -->
-  <script src="https://cdn.jsdelivr.net/npm/chess.js@1.0.0/chess.min.js"></script>
-
-  <!-- Chessground -->
-  <script src="https://unpkg.com/chessground@8.2.1/dist/chessground.min.js"></script>
-
-  <!-- Seu código -->
-  <script src="app.js"></script>
 </body>
 </html>
