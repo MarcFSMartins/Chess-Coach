@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Chess Coach</title>
 
   <!-- Chessboard CSS -->
   <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/chessboard-1.0.0.min.css"/>
+        href="https://unpkg.com/chessboardjs@1.0.0/www/css/chessboard.css"/>
 
   <style>
     body {
@@ -24,16 +24,15 @@
   <h1>Chess Coach</h1>
   <p id="status">Faça um lance</p>
 
-  <!-- TABULEIRO -->
   <div id="board"></div>
 
-  <!-- Chess.js (regras do jogo) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.0.0/chess.min.js"></script>
+  <!-- Chess.js -->
+  <script src="https://unpkg.com/chess.js@1.0.0/chess.min.js"></script>
 
   <!-- Chessboard.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/chessboard-1.0.0.min.js"></script>
+  <script src="https://unpkg.com/chessboardjs@1.0.0/www/js/chessboard.js"></script>
 
-  <!-- Stockfish via CDN -->
+  <!-- Stockfish -->
   <script src="https://cdn.jsdelivr.net/npm/stockfish@16/stockfish.min.js"></script>
 
   <!-- Seu código -->
