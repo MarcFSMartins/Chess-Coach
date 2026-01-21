@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Play Coach</title>
 
-  <!-- Chessboard CSS -->
-  <link rel="stylesheet"
-        href="https://unpkg.com/chessboardjs@1.0.0/www/css/chessboard.css"/>
+  <!-- Chessground CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/chessground@8.2.1/assets/chessground.base.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/chessground@8.2.1/assets/chessground.brown.css"
+  />
 
   <style>
     body {
@@ -15,6 +21,7 @@
     }
     #board {
       width: 320px;
+      height: 320px;
       margin: 20px auto;
     }
   </style>
@@ -24,19 +31,14 @@
   <h1>Play Coach</h1>
   <p id="status">Faça um lance</p>
 
+  <!-- TABULEIRO -->
   <div id="board"></div>
 
-  <!-- jQuery (OBRIGATÓRIO) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <!-- Chess.js -->
+  <!-- Chess.js (regras do jogo) -->
   <script src="https://unpkg.com/chess.js@1.0.0/chess.min.js"></script>
 
-  <!-- Chessboard.js (DEPENDE DE JQUERY) -->
-  <script src="https://unpkg.com/chessboardjs@1.0.0/www/js/chessboard.js"></script>
-
-  <!-- Stockfish -->
-  <script src="https://cdn.jsdelivr.net/npm/stockfish@16/stockfish.min.js"></script>
+  <!-- Chessground -->
+  <script src="https://unpkg.com/chessground@8.2.1/dist/chessground.min.js"></script>
 
   <!-- Seu código -->
   <script src="app.js"></script>
