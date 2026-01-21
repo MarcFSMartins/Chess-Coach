@@ -46,6 +46,16 @@ function render() {
 
       sq.onclick = () => onSquareClick(r, c);
       boardEl.appendChild(sq);
+if (
+  legalMoves.some(m => m[0] === r && m[1] === c)
+) {
+  sq.classList.add(
+    board[r][c] === "." ? "legal-move" : "capture"
+  );
+}
+
+     
+
     }
   }
 
@@ -57,19 +67,19 @@ function render() {
 function onSquareClick(r, c) {
   const piece = board[r][c];
 
-  // destino após seleção
+  // destino
   if (selected) {
     const [sr, sc] = selected;
 
     if (
-      isLegalMove(board, sr, sc, r, c) &&
-      isPlayersPiece(board[sr][sc])
+      legalMoves.some(m => m[0] === r && m[1] === c)
     ) {
       movePiece(sr, sc, r, c);
       turn = turn === "white" ? "black" : "white";
     }
 
     selected = null;
+    legalMoves = [];
     render();
     return;
   }
@@ -77,8 +87,11 @@ function onSquareClick(r, c) {
   // selecionar peça
   if (piece !== "." && isPlayersPiece(piece)) {
     selected = [r, c];
+    legalMoves = getLegalMoves(r, c);
+    render();
   }
 }
+
 
 /* ================== MOVIMENTO ================== */
 
@@ -100,6 +113,19 @@ function isPlayersPiece(piece) {
   return turn === "white"
     ? piece === piece.toUpperCase()
     : piece === piece.toLowerCase();
+}
+
+function getLegalMoves(sr, sc) {
+  const moves = [];
+
+  for (let r = 0; r < 8; r++) {
+    for (let c = 0; c < 8; c++) {
+      if (isLegalMove(board, sr, sc, r, c)) {
+        moves.push([r, c]);
+      }
+    }
+  }
+  return moves;
 }
 
 /* ================== RESET ================== */
