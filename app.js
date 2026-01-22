@@ -59,7 +59,7 @@ if (
     }
   }
 
-  statusEl.innerText = `Vez das ${turn === "white" ? "brancas" : "pretas"}`;
+  statusEl.innerText = ``;
 }
 
 /* ================== INTERAÇÃO ================== */
