@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess Coach</title>
+  <style>
+    /* =====================================================
+       VISUAL / CSS
+       ===================================================== */
+
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: sans-serif;
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      width: 100vw;
+      max-width: 100vmin;
+    }
+
+    .square {
+      aspect-ratio: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      font-size: clamp(64px, 12vw, 86px);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .light { background: #d0d0d0; }
+    .dark  { background: #7a7a7a; }
+
+    .piece {
+      position: relative;
+      z-index: 2;
+      transition: transform 0.15s ease;
+    }
+
+    .square.selected .piece {
+      transform: scale(1.4);
+    }
+
+    /* casas válidas */
+    .square.valid::after {
+      content: "";
+      position: absolute;
+      width: 22%;
+      height: 22%;
+      border-radius: 50%;
+      background: rgba(255, 140, 0, 0.8);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+<div id="board"></div>
+
+<script>
+  // =====================================================
+  // JS: Criação do tabuleiro e peças de teste
+  // =====================================================
+  const board = document.getElementById('board');
+  const files = ['a','b','c','d','e','f','g','h'];
+  
+  // Unicode para peças de xadrez
+  const initialPosition = [
+    ["♜","♞","♝","♛","♚","♝","♞","♜"],
+    ["♟","♟","♟","♟","♟","♟","♟","♟"],
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+    ["♙","♙","♙","♙","♙","♙","♙","♙"],
+    ["♖","♘","♗","♕","♔","♗","♘","♖"]
+  ];
+
+  for(let rank=0; rank<8; rank++){
+    for(let file=0; file<8; file++){
+      const square = document.createElement('div');
+      square.classList.add('square');
+      square.classList.add((rank + file) % 2 === 0 ? 'light' : 'dark');
+      square.dataset.rank = 8-rank;
+      square.dataset.file = files[file];
+      const pieceChar = initialPosition[rank][file];
+      if(pieceChar){
+        const piece = document.createElement('div');
+        piece.classList.add('piece');
+        piece.textContent = pieceChar;
+        square.appendChild(piece);
+      }
+      board.appendChild(square);
+
+      // Evento de teste: selecionar peça
+      square.addEventListener('click', ()=>{
+        document.querySelectorAll('.square').forEach(sq => sq.classList.remove('selected'));
+        square.classList.add('selected');
+      });
+    }
+  }
+</script>
+
+</body>
+</html>
